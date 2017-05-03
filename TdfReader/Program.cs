@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace TdfReader
@@ -10,7 +12,13 @@ namespace TdfReader
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            if (args.Length == 1 && File.Exists(args[0]))
+            {
+                Application.Run(new Form1(args[0]));
+            }
+            else
+                Application.Run(new Form1());
         }
     }
 }
