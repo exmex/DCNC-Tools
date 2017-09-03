@@ -5,14 +5,14 @@ namespace TdfReader
 {
     public class BinaryReaderExt : BinaryReader
     {
-        public BinaryReaderExt(MemoryStream stream)
+        public BinaryReaderExt(Stream stream)
             : base(stream, Encoding.Unicode)
         {
         }
 
         public string ReadUnicode()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             char val;
             do
             {
@@ -26,8 +26,8 @@ namespace TdfReader
 
         public string ReadUnicodeStatic(int maxLength)
         {
-            byte[] buf = ReadBytes(maxLength * 2);
-            string str = Encoding.Unicode.GetString(buf);
+            var buf = ReadBytes(maxLength * 2);
+            var str = Encoding.Unicode.GetString(buf);
 
             if (str.Contains("\0"))
                 str = str.Substring(0, str.IndexOf('\0'));
@@ -37,13 +37,13 @@ namespace TdfReader
 
         public string ReadUnicodePrefixed()
         {
-            ushort length = ReadUInt16();
+            var length = ReadUInt16();
             return ReadUnicodeStatic(length);
         }
 
         public string ReadAscii()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             byte val;
             do
             {
@@ -56,8 +56,8 @@ namespace TdfReader
 
         public string ReadAsciiStatic(int maxLength)
         {
-            byte[] buf = ReadBytes(maxLength);
-            string str = Encoding.ASCII.GetString(buf);
+            var buf = ReadBytes(maxLength);
+            var str = Encoding.ASCII.GetString(buf);
 
             if (str.Contains("\0"))
                 str = str.Substring(0, str.IndexOf('\0'));

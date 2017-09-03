@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{90B7125E-F7D0-4921-BF3E-1FA53A2E9D23}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>RiceLauncher_merged</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="InjectionLibrary\CRTInjection.cs" />
+    <Compile Include="InjectionLibrary\InjectionMethod.cs" />
+    <Compile Include="InjectionLibrary\InjectionMethodType.cs" />
+    <Compile Include="InjectionLibrary\ManualMap.cs" />
+    <Compile Include="InjectionLibrary\StandardInjectionMethod.cs" />
+    <Compile Include="InjectionLibrary\ThreadHijack.cs" />
+    <Compile Include="JLibrary.PortableExecutable\Constants.cs" />
+    <Compile Include="JLibrary.PortableExecutable\DATA_DIRECTORIES.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_BASE_RELOCATION.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_DATA_DIRECTORY.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_DOS_HEADER.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_FILE_HEADER.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_IMPORT_DESCRIPTOR.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_NT_HEADER32.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_OPTIONAL_HEADER32.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_RESOURCE_DATA_ENTRY.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_RESOURCE_DIRECTORY.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_RESOURCE_DIRECTORY_ENTRY.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_SECTION_HEADER.cs" />
+    <Compile Include="JLibrary.PortableExecutable\IMAGE_THUNK_DATA.cs" />
+    <Compile Include="JLibrary.PortableExecutable\PortableExecutable.cs" />
+    <Compile Include="JLibrary.PortableExecutable\ResourceWalker.cs" />
+    <Compile Include="JLibrary.PortableExecutable\U1.cs" />
+    <Compile Include="JLibrary.Tools\ErrorBase.cs" />
+    <Compile Include="JLibrary.Tools\MemoryIterator.cs" />
+    <Compile Include="JLibrary.Tools\UnmanagedBuffer.cs" />
+    <Compile Include="JLibrary.Tools\Utils.cs" />
+    <Compile Include="JLibrary.Win32\Win32Ptr.cs" />
+    <Compile Include="JLibrary.Win32\WinAPI.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RiceLauncher.Properties\Resources.cs" />
+    <Compile Include="RiceLauncher.Properties\Settings.cs" />
+    <Compile Include="RiceLauncher\LauncherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RiceLauncher\Program.cs" />
+    <Compile Include="RiceLauncher\ServerEntry.cs" />
+    <Compile Include="System.Runtime.CompilerServices\ExtensionAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RiceLauncher.Properties\Resources.resx" />
+    <EmbeddedResource Include="RiceLauncher\LauncherForm.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
