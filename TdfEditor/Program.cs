@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace TdfReader
+namespace TdfEditor
 {
     class Program
     {
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
+            // Slowing down app.
+            //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             if (args.Length == 1 && File.Exists(args[0]))

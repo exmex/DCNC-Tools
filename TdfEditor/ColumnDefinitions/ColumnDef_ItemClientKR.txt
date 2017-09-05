@@ -1,0 +1,23 @@
+Empty
+Type
+Set Type
+ID Name
+Group ID
+Name
+???
+Grade
+Required Level
+???
+Value
+Min
+Max
+Cost
+Sell
+Next ID
+Shop
+Trade
+Auction
+Set Rate
+Set Desc
+Set Assist
+Time
