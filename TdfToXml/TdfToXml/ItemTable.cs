@@ -1,48 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
-using TdfToXml;
 
-namespace TdfToXml.Items
+namespace TdfToXml
 {
-    public class BasicItem
-    {
-        [XmlAttribute("id")] public string Id;
-
-        [XmlAttribute("category")] public string Category;
-
-        [XmlAttribute("name")] public string Name;
-
-        [XmlAttribute("description")] public string Description;
-
-        [XmlAttribute("function")] public string Function;
-
-        [XmlAttribute("nextstate")] public string NextState;
-
-        [XmlAttribute("buyvalue")] public string BuyValue;
-
-        [XmlAttribute("sellvalue")] public string SellValue;
-
-        [XmlAttribute("expirationtime")] public string ExpirationTime;
-
-        [XmlAttribute("auctionable")] public string Auctionable;
-
-        [XmlAttribute("partsshop")] public string PartsShop;
-
-        [XmlAttribute("sendable")] public string Sendable;
-        
-        virtual public bool IsStackable()
-        {
-            return false;
-        }
-
-        virtual public uint GetMaxStack()
-        {
-            return 1;
-        }
-    }
-    
     [Serializable]
     [XmlRoot(ElementName = "UseItems")]
     public class UseItemTable
@@ -169,8 +134,6 @@ namespace TdfToXml.Items
             [XmlAttribute("neostats")] public string NeoStats;
         }
         
-        
-
         [XmlElement(ElementName = "Item")]
         public List<Item> ItemList = new List<Item>();
         /*[XmlArray(ElementName = "Item")]
@@ -189,7 +152,7 @@ namespace TdfToXml.Items
                 for (var row = 0; row < tdfFile.Header.Row; row++)
                 {
                     var item = new Item();
-                    // TODO: If us, this doesn't exist for some reason?!
+                    // TODO: If US, this doesn't exist for some reason?!
                     //reader.ReadUnicode(); // Empty
                     item.Category = reader.ReadUnicode(); // Type
                     reader.ReadUnicode(); // Set Type
@@ -216,6 +179,10 @@ namespace TdfToXml.Items
                     item.PartAssist = reader.ReadUnicode(); // Set assist
                     //
                     item.ExpirationTime = reader.ReadUnicode();
+                    
+                    // US Only
+                    reader.ReadUnicode(); // Jewel Type
+                    reader.ReadUnicode(); // Unknown
                     ItemList.Add(item);
                 }
             }
@@ -231,33 +198,6 @@ namespace TdfToXml.Items
             {
                 serializer.Serialize(writer, this, ns);
             }
-        }
-    }
-    
-    public class ItemDatas
-    {
-        public List<BasicItem> ItemList = new List<BasicItem>();
-        
-        public static List<BasicItem> Load(string itemFileName, string useItemFileName)
-        {
-            var basicItems = new List<BasicItem>();
-            
-            var serializer = new XmlSerializer(typeof(ItemTable));
-
-            using (var reader = new StreamReader(itemFileName))
-            {
-                var items = (ItemTable) serializer.Deserialize(reader);
-                basicItems.AddRange(items.ItemList);
-            }
-            
-            serializer = new XmlSerializer(typeof(UseItemTable));
-            UseItemTable useItems;
-            using (var reader = new StreamReader(useItemFileName))
-            {
-                var items = (UseItemTable) serializer.Deserialize(reader);
-                basicItems.AddRange(items.UseItemList);
-            }
-            return basicItems;
         }
     }
 }

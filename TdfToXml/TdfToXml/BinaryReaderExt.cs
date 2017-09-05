@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace TdfReader
+namespace TdfToXml
 {
     public class BinaryReaderExt : BinaryReader
     {

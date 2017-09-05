@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
+using System.Threading;
 
-namespace TdfReader
+namespace TdfToXml
 {
     public class TdfFile
     {
         // TODO: More column names :)
-
         private static readonly string[] QuestColumns =
         {
             // TODO: Column count doesn't match sometimes
@@ -126,18 +126,29 @@ namespace TdfReader
             "Jewel Type"
         };
 
-        public SBitmap Bitmap;
+        public readonly SBitmap Bitmap;
         public int[] DataTable;
-        public SHeader Header;
+        public readonly SHeader Header;
         public byte[] ResTable;
-        public SVersion Version;
+        public readonly SVersion Version;
 
         public TdfFile()
         {
             Bitmap = new SBitmap();
             Version = new SVersion();
-            Header = new SHeader();
-            Header.Date = new SDate();
+            Header = new SHeader
+            {
+                Date = new SDate()
+            };
+            Header.Date.Day = (char) DateTime.Now.Day;
+            Header.Date.Month = (char) DateTime.Now.Month;
+            Header.Date.Year = (ushort) DateTime.Now.Year;
+
+            Bitmap.BfType = 19778;
+            Bitmap.BfSize = 21054;
+            Bitmap.BfOffBits = 54;
+            Version.Major = 1;
+            Version.Minor = 4;
         }
 
         public void Load(string fileName)
@@ -156,9 +167,8 @@ namespace TdfReader
                 Version.Minor = reader.ReadUInt16();
                 if (Version.Major != 1 && Version.Minor != 4)
                 {
-                    MessageBox.Show(
-                        "The version of this file is not supported. Please create an issue @https://github.com/exmex/DCNC-Tools/issues/new");
-                    Application.Exit();
+                    /*MessageBox.Show(
+                        @"The version of this file is not supported. Please create an issue @https://github.com/exmex/DCNC-Tools/issues/new");*/
                     return;
                 }
 
@@ -179,11 +189,42 @@ namespace TdfReader
                 for (long i = 0; i < Header.Offset - (Header.Col * 4 * Header.Row + 24); i++)
                     ResTable[i] = reader.ReadByte();
 
+#if DEBUG
                 Debug.WriteLine("Loaded TDF Version: {0:D}.{1:D} ({2:D}/{3:D}/{4:D})", (int) Version.Major,
                     Version.Minor, (short) Header.Date.Month, (short) Header.Date.Day, Header.Date.Year);
-                Debug.WriteLine("File contains {0} Rows and {1} Columns", Header.Row, Header.Col);
+                Debug.WriteLine("File Offset: {2} contains {0} Rows and {1} Columns", Header.Row, Header.Col, Header.Offset);
 
                 Debug.WriteLine("DataTable size: {0:D}, ResTable size: {1:D}", DataTable.Length, ResTable.Length);
+#endif
+            }
+        }
+
+        public void Save(string fileName)
+        {
+            using (var writer = new BinaryWriter(File.Open(fileName, FileMode.Create)))
+            {
+                writer.Write(Bitmap.BfType);
+                writer.Write(Bitmap.BfSize);
+                writer.Write(Bitmap.BfReserved1);
+                writer.Write(Bitmap.BfReserved2);
+                writer.Write(Bitmap.BfOffBits);
+                if (Bitmap.BfType == 19778)
+                    writer.Write(new byte[(int) Bitmap.BfSize - 14]);
+                writer.Write(Version.Major);
+                writer.Write(Version.Minor);
+                writer.Write(Header.Date.Year);
+                writer.Write(Header.Date.Month);
+                writer.Write(Header.Date.Day);
+                writer.Write(Header.Flag);
+                writer.Write(Header.Offset);
+                writer.Write(Header.Col);
+                writer.Write(Header.Row);
+                
+                for (var i = 0; i < Header.Col * Header.Row; i++)
+                    writer.Write(DataTable[i]);
+
+                for (long i = 0; i < Header.Offset - (Header.Col * 4 * Header.Row + 24); i++)
+                    writer.Write(ResTable[i]);
             }
         }
 
@@ -192,28 +233,26 @@ namespace TdfReader
             return null;
         }
 
-        public string GetColumnName(int column, string fileName)
+        public static string GetColumnName(int column, string fileName)
         {
             switch (fileName)
             {
+                default:
+                //case "QuestClient.tdf":
+                    break;
                 case "ItemClient.tdf":
                     if (ItemClientColumns.Length > column)
                         return ItemClientColumns[column];
                     break;
-                case "QuestClient.tdf":
-                    break;
-
                 case "ItemServer.tdf":
                     if (ItemServerColumns.Length > column)
                         return ItemServerColumns[column];
                     break;
-
                 case "QuestServer.tdf":
                     if (QuestColumns.Length > column)
                         return QuestColumns[column];
                     break;
             }
-
             return column.ToString();
         }
 

@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TdfEditor", "TdfEditor\TdfEditor.csproj", "{80CCD73C-14D4-4637-9C1D-89D4A65EF6C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TdfToXml", "TdfToXml\TdfToXml\TdfToXml.csproj", "{9415F34F-5537-483B-9BB2-1BF5771236F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TdfToXml", "TdfToXml\TdfToXml.csproj", "{9415F34F-5537-483B-9BB2-1BF5771236F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80CCD73C-14D4-4637-9C1D-89D4A65EF6C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80CCD73C-14D4-4637-9C1D-89D4A65EF6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80CCD73C-14D4-4637-9C1D-89D4A65EF6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80CCD73C-14D4-4637-9C1D-89D4A65EF6C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9415F34F-5537-483B-9BB2-1BF5771236F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9415F34F-5537-483B-9BB2-1BF5771236F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9415F34F-5537-483B-9BB2-1BF5771236F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
