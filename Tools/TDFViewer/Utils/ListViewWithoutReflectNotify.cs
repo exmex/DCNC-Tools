@@ -32,13 +32,13 @@ namespace TDFViewer.Utils
 
                 //the if below never was true on my system so i 'shorted' it
                 //delete the 2 lines above if you want to test this yourself
-                NMHDR hdr = (NMHDR) m.GetLParam(typeof (NMHDR));
+                /*NMHDR hdr = (NMHDR) m.GetLParam(typeof (NMHDR));
                 if (hdr.code == NM_CUSTOMDRAW)
                 {
                     Debug.WriteLine("Hit");
                     m.Result = (IntPtr) 0;
                     return;
-                }
+                }*/
             }
 
             base.WndProc(ref m);

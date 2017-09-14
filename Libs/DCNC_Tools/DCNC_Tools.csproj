@@ -70,8 +70,8 @@
     <Compile Include="FileSystem\Virtual\VirtualFile.cs" />
     <Compile Include="FileSystem\Virtual\VirtualFolder.cs" />
     <Compile Include="FileSystem\Virtual\VirtualPath.cs" />
-    <Compile Include="Formats\AGTJP.cs" />
     <Compile Include="Formats\AGT.cs" />
+    <Compile Include="Formats\LOF.cs" />
     <Compile Include="Formats\NTX.cs" />
     <Compile Include="Formats\TDF.cs" />
     <Compile Include="IO\BinaryReaderExt.cs" />
