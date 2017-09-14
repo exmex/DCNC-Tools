@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8C4CA76-45CC-4054-BA75-E3817F4B35BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JLibrary</RootNamespace>
+    <AssemblyName>JLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\JLibrary\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\JLibrary\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EXAMPLEUSAGE.cs" />
+    <Compile Include="InjectionLibrary\CRTInjection.cs" />
+    <Compile Include="InjectionLibrary\InjectionMethod.cs" />
+    <Compile Include="InjectionLibrary\InjectionMethodType.cs" />
+    <Compile Include="InjectionLibrary\ManualMap.cs" />
+    <Compile Include="InjectionLibrary\StandardInjectionMethod.cs" />
+    <Compile Include="InjectionLibrary\ThreadHijack.cs" />
+    <Compile Include="JLibrary\PortableExecutable\Constants.cs" />
+    <Compile Include="JLibrary\PortableExecutable\DATA_DIRECTORIES.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_BASE_RELOCATION.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_DATA_DIRECTORY.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_DOS_HEADER.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_FILE_HEADER.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_IMPORT_DESCRIPTOR.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_NT_HEADER32.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_OPTIONAL_HEADER32.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_RESOURCE_DATA_ENTRY.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_RESOURCE_DIRECTORY.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_RESOURCE_DIRECTORY_ENTRY.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_SECTION_HEADER.cs" />
+    <Compile Include="JLibrary\PortableExecutable\IMAGE_THUNK_DATA.cs" />
+    <Compile Include="JLibrary\PortableExecutable\PortableExecutable.cs" />
+    <Compile Include="JLibrary\PortableExecutable\ResourceWalker.cs" />
+    <Compile Include="JLibrary\PortableExecutable\U1.cs" />
+    <Compile Include="JLibrary\Tools\ErrorBase.cs" />
+    <Compile Include="JLibrary\Tools\MemoryIterator.cs" />
+    <Compile Include="JLibrary\Tools\UnmanagedBuffer.cs" />
+    <Compile Include="JLibrary\Tools\Utils.cs" />
+    <Compile Include="JLibrary\Win32\Win32Ptr.cs" />
+    <Compile Include="JLibrary\Win32\WinAPI.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
