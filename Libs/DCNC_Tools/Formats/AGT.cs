@@ -291,7 +291,7 @@ namespace DCNC_Tools.Formats
                                 try
                                 {
                                     // Decompress the current chunk
-                                    var decompressedFile = DecompressZLibRaw(compressedFile);
+                                    var decompressedFile = Compression.DecompressZLibRaw(compressedFile);
                                     // Check if the chunk isn't too big?
                                     if (decompressedFile.Length > MaxFileChunkSize)
                                         throw new FormatException(
@@ -306,7 +306,10 @@ namespace DCNC_Tools.Formats
                                         fileSize = arr.Length;
                                     }
 
-                                    Array.Copy(decompressedFile, 0, Files[currentFileName], totalChunksSizeRead, decompressedFile.Length);
+                                    if(j+1 == fileChunks)
+                                        Array.Copy(decompressedFile, 0, Files[currentFileName], totalChunksSizeRead, fileSize - totalChunksSizeRead);
+                                    else
+                                        Array.Copy(decompressedFile, 0, Files[currentFileName], totalChunksSizeRead, decompressedFile.Length);
                                     totalChunksSizeRead += decompressedFile.Length;
                                 }
                                 catch (ZlibException)
@@ -338,43 +341,6 @@ namespace DCNC_Tools.Formats
                             throw new FormatException($"File {currentFileName} corrupt?");
                     }
                 }
-            }
-        }
-        
-        /// <summary>
-        /// Helper function to decompress a byte array
-        /// </summary>
-        /// <param name="compressed">The byte array to decompress</param>
-        /// <returns>The decompressed byte array</returns>
-        private static byte[] DecompressZLibRaw(byte[] compressed)
-        {
-            using (var outputMemoryStream = new MemoryStream()) 
-            using (var compressedMemoryStream = new MemoryStream())
-            {
-                compressedMemoryStream.Write(compressed, 0, compressed.Length);
-                compressedMemoryStream.Position = 0;
-                using (var decomp = new ZlibStream(compressedMemoryStream, CompressionMode.Decompress))
-                    decomp.CopyTo(outputMemoryStream);
-                return outputMemoryStream.ToArray();
-            }
-        }
-        
-        /// <summary>
-        /// Helper function to compress a byte array
-        /// </summary>
-        /// <param name="uncompressed">The byte array to compress</param>
-        /// <returns>The compressed byte array</returns>
-        private static byte[] CompressZLibRaw(byte[] uncompressed)
-        {
-            using (var outputMemoryStream = new MemoryStream()) 
-            using (var uncompressedMemoryStream = new MemoryStream())
-            {
-                uncompressedMemoryStream.Write(uncompressed, 0, uncompressed.Length);
-                uncompressedMemoryStream.Position = 0;
-                using (var decomp = new ZlibStream(uncompressedMemoryStream, CompressionMode.Compress, CompressionLevel.Default))
-                    decomp.CopyTo(outputMemoryStream);
-                
-                return outputMemoryStream.ToArray();
             }
         }
     }

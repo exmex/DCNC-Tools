@@ -84,6 +84,7 @@
     <Compile Include="Utils\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Compression.cs" />
     <Compile Include="Utils\DDSReader\DDS.cs" />
     <Compile Include="Utils\DDSReader\DDSImage.cs" />
     <Compile Include="Utils\DDSReader\Decompressor.cs" />
