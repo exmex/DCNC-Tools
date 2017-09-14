@@ -297,15 +297,6 @@ namespace DCNC_Tools.Formats
                                         throw new FormatException(
                                             $"Chunk {j} for file {currentFileName} was too big! Corrupted archive?");
 
-                                    // TODO: Yes there is still a bug with the sizes. Since JP Files read too many bytes from chunk grrr!
-                                    if (Files[currentFileName].Length < totalChunksSizeRead + decompressedFile.Length)
-                                    {
-                                        var arr = Files[currentFileName];
-                                        Array.Resize(ref arr, totalChunksSizeRead + decompressedFile.Length);
-                                        Files[currentFileName] = arr;
-                                        fileSize = arr.Length;
-                                    }
-
                                     if(j+1 == fileChunks)
                                         Array.Copy(decompressedFile, 0, Files[currentFileName], totalChunksSizeRead, fileSize - totalChunksSizeRead);
                                     else
@@ -317,23 +308,21 @@ namespace DCNC_Tools.Formats
                                     // Ionic.Zlib had issues with non-compressed files with ZLIB header.
                                     Debug.WriteLine(@"{0} File is not compressed but tried to decompress (Header: {1:X} {2:X})", currentFileName, compressedFile[0], compressedFile[1]);
                                     Console.WriteLine(@"{0} File is not compressed but tried to decompress (Header: {1:X} {2:X})", currentFileName, compressedFile[0], compressedFile[1]);
-                                    
-                                    if (Files[currentFileName].Length < totalChunksSizeRead + compressedFile.Length)
-                                    {
-                                        var arr = Files[currentFileName];
-                                        Array.Resize(ref arr, totalChunksSizeRead + compressedFile.Length);
-                                        Files[currentFileName] = arr;
-                                        fileSize = arr.Length;
-                                    }
 
-                                    Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, compressedFile.Length);
+                                    if (j + 1 == fileChunks)
+                                        Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, fileSize - totalChunksSizeRead);
+                                    else
+                                        Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, compressedFile.Length);
                                     totalChunksSizeRead += compressedFile.Length;
                                 }
                             }
                             else
                             {
                                 // File should be uncompressed. Just read the "compressedFile" in.
-                                Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, compressedFile.Length);
+                                if (j + 1 == fileChunks)
+                                    Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, fileSize - totalChunksSizeRead);
+                                else
+                                    Array.Copy(compressedFile, 0, Files[currentFileName], totalChunksSizeRead, compressedFile.Length);
                                 totalChunksSizeRead += compressedFile.Length;
                             }
                         }
