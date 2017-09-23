@@ -1,4 +1,5 @@
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace DCNC_Tools.IO
@@ -8,6 +9,40 @@ namespace DCNC_Tools.IO
         public BinaryReaderExt(Stream stream)
             : base(stream, Encoding.Unicode)
         {
+        }
+
+        public Vector4 ReadVector4()
+        {
+            var vec = new Vector4
+            {
+                X = ReadSingle(),
+                Y = ReadSingle(),
+                Z = ReadSingle(),
+                W = ReadSingle()
+            };
+
+            return vec;
+        }
+
+        public Vector2 ReadVector2()
+        {
+            var vec = new Vector2
+            {
+                X = ReadSingle(),
+                Y = ReadSingle()
+            };
+            return vec;
+        }
+
+        public Vector3 ReadVector3()
+        {
+            var vec = new Vector3
+            {
+                X = ReadSingle(),
+                Y = ReadSingle(),
+                Z = ReadSingle()
+            };
+            return vec;
         }
 
         public string ReadUnicode()
