@@ -44,11 +44,19 @@ namespace Launcher
                 return;
 #endif
 
-            dcProcess.Kill();
-            Process.GetProcessesByName("gameguard.des").First().Kill();
-            Process.GetProcessesByName("gamemon.des").First().Kill();
-            Process.GetProcessesByName("gamemon64.des").First().Kill();
-
+			try
+			{
+				dcProcess.Kill();
+				Process.GetProcessesByName("gameguard.des").First().Kill();
+				Process.GetProcessesByName("gamemon.des").First().Kill();
+				Process.GetProcessesByName("gamemon64.des").First().Kill();
+			}
+			catch(Exception)
+			{
+				Console.WriteLine("There was an error trying to kill the processes!");
+				// ignored.
+			}
+				
             Console.WriteLine("Injecting of DLL Failed.");
             Console.ReadKey();
         }
