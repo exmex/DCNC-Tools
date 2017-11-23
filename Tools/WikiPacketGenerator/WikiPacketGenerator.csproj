@@ -1,0 +1,24 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Linq" />
+    <Reference Include="System.Drawing" />
+    <Compile Include="src\*.cs" />
+</ItemGroup>
+<Target Name="Build">
+    <MakeDir Directories="$(OutputPath)"
+        Condition="!Exists('$(OutputPath)')"
+    />
+    <Csc
+        Platform="x86"
+        NoWarn=""
+        Sources="@(Compile)"
+        OutputAssembly="$(OutputPath)$(AssemblyName).exe"
+    />
+</Target>
+<PropertyGroup>
+    <AssemblyName>WikiPacketGenerator</AssemblyName>
+    <OutputPath>bin\</OutputPath>
+</PropertyGroup>
+<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
